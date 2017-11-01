@@ -4,3 +4,5 @@ This is a course from Udemy, you can find the link [here](https://github.com/Eva
 
 * BT01 Intro, Note and assets
 * BT02 Game Design Document
+* BT03 Setting up GitHub account with Source Tree
+
