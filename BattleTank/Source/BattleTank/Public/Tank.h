@@ -11,6 +11,10 @@ class BATTLETANK_API ATank : public APawn
 	GENERATED_BODY()
 
 public:
+	void AimAt(FVector);
+
+
+private:
 	// Sets default values for this pawn's properties
 	ATank();
 
