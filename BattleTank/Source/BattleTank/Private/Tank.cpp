@@ -48,4 +48,8 @@ void ATank::AimAt(FVector HitLocation)
 void ATank::Fire()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Tank is firing"));
+
+	if (!Barrel) { return; }
+
+	//spawn a projectile at the socket location of the barrel
 }
