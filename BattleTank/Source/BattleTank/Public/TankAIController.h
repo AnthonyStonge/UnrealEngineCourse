@@ -14,11 +14,14 @@ class BATTLETANK_API ATankAIController : public AAIController
 	GENERATED_BODY()
 	
 
-public:
+private:
 
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-	
+
 	void AimTowardsCrosshair();
+
+	//How can the AI get close to the player
+	float AcceptanceRadius = 3000;
 
 };
