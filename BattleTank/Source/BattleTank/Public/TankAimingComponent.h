@@ -5,11 +5,36 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
-//Forward declaration
+/*
+ *
+ *
+ *		Enum for aiming state
+ *
+ *
+ */
+UENUM()
+enum class EFiringState : uint8
+{
+	Locked	 UMETA(DisplayName = "Locked"),
+	Aiming	 UMETA(DisplayName = "Aiming"),
+	Reloading	 UMETA(DisplayName = "Reloading")
+};
+
+/*
+ *
+ *		Forward declaration
+ *
+ */
 class UTankBarrel; 
 class UTankTurret;
 
-//Hold's barrel property and elevate method
+/*
+ *
+ *		Class
+ *		Hold's barrel property and elevate method
+ *
+ *
+ */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
@@ -22,9 +47,14 @@ public:
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 	void SetTurretReference(UTankTurret* TurretToSet);
 
-public:
+	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Enum)
+		EFiringState CurrentFiringState;*/
 
 	void AimAt(FVector HitLocation, float LaunchSpeed);
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "State")
+	EFiringState FiringState = EFiringState::Aiming;
 
 private:
 	UTankBarrel* Barrel = nullptr;
@@ -32,4 +62,5 @@ private:
 
 	void MoveBarrelTowards(FVector AimDirection);
 	void MoveTurretTowards(FVector AimDirection); 
+
 };
