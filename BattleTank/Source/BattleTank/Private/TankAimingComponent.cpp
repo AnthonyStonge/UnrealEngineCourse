@@ -3,6 +3,7 @@
 #include "BattleTank.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 #include "TankAimingComponent.h"
 
 
@@ -17,13 +18,29 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+void UTankAimingComponent::BeginPlay()
+{
+	Super::BeginPlay();
+	//First fire after initial reload
+	LastFireTime = FPlatformTime::Seconds();
+}
+
+void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+{
+	if((FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds)
+	{
+		FiringState = EFiringState::Reloading;
+	}
+	//TODO Handle aiming and locked firing state
+}
+
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	if (!ensure(Barrel)) { return; }
 	if (!ensure(Turret)) { return; }
@@ -47,10 +64,10 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	if(bHaveAimSolution)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		auto TankName = GetOwner()->GetName();
+		//auto TankName = GetOwner()->GetName();
 		MoveBarrelTowards(AimDirection);
 		MoveTurretTowards(AimDirection);
-		auto Time = GetWorld()->GetTimeSeconds();
+		//auto Time = GetWorld()->GetTimeSeconds();
 
 		//Use for debug.
 		//UE_LOG(LogTemp, Warning, TEXT("%f : Aim solution found"), Time);
@@ -84,5 +101,26 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 	Barrel->Elevate(DeltaRotator.Pitch);
 }
+
+void UTankAimingComponent::Fire()
+{
+	if (FiringState != EFiringState::Reloading)
+	{
+
+		if (!ensure(Barrel && Projectile_BP)) { return; }
+		//spawn a projectile at the socket location of the barrel
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			Projectile_BP,
+			Barrel->GetSocketLocation(FName("ProjectileSpawn")),
+			Barrel->GetSocketRotation(FName("ProjectileSpawn"))
+			);
+
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
+	}
+
+
+}
+
 
 
