@@ -18,12 +18,12 @@ public:
 	void Elevate(float RelativeSpeed);
 	
 private: 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditAnywhere, Category = "Setup")
 		float MaxDregreesPerSecond = 7.5; //Changeable for UX
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditAnywhere, Category = "Setup")
 		float MaxElevationDegrees = 20; //Do not exceed 35, won't seem real
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditAnywhere, Category = "Setup")
 		float MinElevationDegrees = 0; //If Below 0 we have collision with the back of the tank
 };
