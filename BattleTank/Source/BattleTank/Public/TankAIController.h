@@ -12,6 +12,10 @@ class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 	
+protected:
+	//How can the AI get close to the player
+	UPROPERTY(EditDefaultsOnly, Category = "Setup") //Consider EditDefaultOnly
+		float AcceptanceRadius = 8000;
 
 private:
 
@@ -20,7 +24,6 @@ private:
 
 	void AimTowardsCrosshair();
 
-	//How can the AI get close to the player
-	float AcceptanceRadius = 3000;
+	
 
 };
