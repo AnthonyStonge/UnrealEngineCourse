@@ -32,19 +32,25 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	if((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
 	{
 		FiringState = EFiringState::Reloading;
-		UE_LOG(LogTemp, Warning, TEXT("Firing State : Reloading"));
+		//UE_LOG(LogTemp, Warning, TEXT("Firing State : Reloading"));
 	}
 	else if(IsBarrelMoving())
 	{
 		FiringState = EFiringState::Aiming;
-		UE_LOG(LogTemp, Warning, TEXT("Firing State : Aiming"));
+		//UE_LOG(LogTemp, Warning, TEXT("Firing State : Aiming"));
 	}
 	else
 	{
 		FiringState = EFiringState::Locked;
-		UE_LOG(LogTemp, Warning, TEXT("Firing State : Locked"));
+		//UE_LOG(LogTemp, Warning, TEXT("Firing State : Locked"));
 	}
 }
+
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState();
+}
+
 
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
@@ -101,9 +107,10 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 	auto DeltaRotator = AimAsRotator - TurretYaw;
 
 	//Use for debug
-	//UE_LOG(LogTemp, Warning, TEXT("AimAsTurretRotator: %s"), *DeltaRotator.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("AimAsTurretRotator: %s"), *DeltaRotator.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("Turret vector: %s"), *AimAsRotator.ToString());
 
-	Turret->Rotate(DeltaRotator.Yaw);
+	Turret->Rotate(DeltaRotator.GetNormalized().Yaw);
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
@@ -138,6 +145,7 @@ void UTankAimingComponent::Fire()
 
 
 }
+
 
 
 
