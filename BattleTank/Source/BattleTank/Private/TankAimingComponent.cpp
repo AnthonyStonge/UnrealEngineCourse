@@ -13,7 +13,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 
-	bWantsBeginPlay = true;
+	
 	PrimaryComponentTick.bCanEverTick = true; 
 
 	// ...
@@ -107,8 +107,8 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 	auto DeltaRotator = AimAsRotator - TurretYaw;
 
 	//Use for debug
-	UE_LOG(LogTemp, Warning, TEXT("AimAsTurretRotator: %s"), *DeltaRotator.ToString());
-	UE_LOG(LogTemp, Warning, TEXT("Turret vector: %s"), *AimAsRotator.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("AimAsTurretRotator: %s"), *DeltaRotator.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("Turret vector: %s"), *AimAsRotator.ToString());
 
 	Turret->Rotate(DeltaRotator.GetNormalized().Yaw);
 }

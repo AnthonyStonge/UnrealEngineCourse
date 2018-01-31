@@ -78,7 +78,7 @@ private:
 		TSubclassOf<AProjectile>Projectile_BP;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float ReloadTimeInSeconds = 3;
+		float ReloadTimeInSeconds = 0.05;
 
 	FVector AimDirection;
 

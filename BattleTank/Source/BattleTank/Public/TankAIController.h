@@ -22,8 +22,12 @@ private:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
+	//Gets called the when the pawn is possessed
+	virtual void SetPawn(APawn* InPawn) override;
+
 	void AimTowardsCrosshair();
 
-	
+	UFUNCTION()
+		void OnPossessedTankDeath();
 
 };
